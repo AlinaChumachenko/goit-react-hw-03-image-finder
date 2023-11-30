@@ -67,8 +67,16 @@ export class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
-  handleSubmit = ({ query }) => {
-    this.setState({ query, images: [], page: 1, loadMore: false });
+  // handleSubmit = ({ query }) => {
+  //   this.setState({ query, images: [], page: 1, loadMore: false });
+  // };
+  handleSubmit = e => {
+    e.preventDefault();
+    const searchValue = e.currentTarget.elements.search.value.trim();
+    if (searchValue === '') {
+      return Notiflix.Notify.failure('Please, fill in the field!');
+    }
+    this.setState({ query: searchValue, page: 1, images: [] });
   };
 
   render() {
@@ -90,48 +98,3 @@ export class App extends Component {
     );
   }
 }
-
-// export class App extends Component {
-//   state = {
-//     isListShown: false,
-//     images: [],
-//     isLoading: false,
-//     page: 1,
-//   };
-//   componentDidUpdate(_, prevState) {
-//     if (
-//       prevState.isListShown !== this.state.isListShown &&
-//       this.state.isListShown
-//     ) {
-//       this.setState({ isLoading: true });
-//       fetchImages(this.state.page)
-//         .then(data =>
-//           this.setState(prevState => ({
-//             images: [...prevState.images, ...data.data.results],
-//           }))
-//         )
-//         .finally(() => {
-//           this.setState({ isLoading: false });
-//         });
-//     }
-//   }
-
-//   showList = () => {
-//     this.setState(prevState => {
-//       return { isListShown: !prevState.isListShown };
-//     });
-//   };
-
-//   render() {
-//     return (
-//       <div>
-//         <Button
-//           textContent={
-//             this.state.isListShown ? 'Hide movies list' : 'Showe movies list'
-//           }
-//           clickHandler={this.showList}
-//         />
-//       </div>
-//     );
-//   }
-// }

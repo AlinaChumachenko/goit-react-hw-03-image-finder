@@ -2,6 +2,14 @@ import { Component } from 'react';
 import css from './Modal.module.css';
 
 class Modal extends Component {
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleEsc);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleEsc);
+  }
+
   backDropClose = e => {
     if (e.target.classList.contains(css.overlay)) {
       this.props.close();
@@ -11,16 +19,6 @@ class Modal extends Component {
   handleEsc = e => {
     e.code === 'Escape' && this.props.close();
   };
-
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleEsc);
-    document.addEventListener('click', this.backDropClose);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleEsc);
-    document.removeEventListener('click', this.backDropClose);
-  }
 
   render() {
     const { imageUrl, id } = this.props;
