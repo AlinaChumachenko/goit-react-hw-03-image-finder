@@ -90,9 +90,11 @@ export class App extends Component {
           paddingBottom: 24,
         }}
       >
-        <Searchbar submit={this.handleSubmit} />
+        <Searchbar onSubmit={this.handleSubmit} />
         {images.length > 0 && <ImageGallery images={images} />}
-        {loadMore && <Button handleLoad={this.loadMoreImages} />}
+        {images.length !== 0 && loadMore && (
+          <Button handleLoad={this.loadMoreImages} />
+        )}
         {isLoading && <Loader />}
       </div>
     );
