@@ -1,11 +1,21 @@
 // import { Component } from 'react';
 import css from './Searchbar.module.css';
-// import Notiflix from 'notiflix';
+import Notiflix from 'notiflix';
 
 const Searchbar = ({ onSubmit }) => {
+  const handleSubmit = e => {
+    e.preventDefault();
+    const searchValue = e.currentTarget.elements.search.value
+      .trim()
+      .toLowerCase();
+    if (searchValue === '') {
+      return Notiflix.Notify.failure('Please, fill in the field!');
+    }
+    onSubmit({ query: searchValue, page: 1, images: [] });
+  };
   return (
     <header className={css.searchbar}>
-      <form onSubmit={onSubmit} className={css.searchForm}>
+      <form onSubmit={handleSubmit} className={css.searchForm}>
         <button type="submit" className={css.searchBtn}>
           <span className={css.searchBtnLabel}>Search</span>
         </button>

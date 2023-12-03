@@ -67,18 +67,18 @@ export class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
-  // handleSubmit = ({ query }) => {
-  //   this.setState({ query, images: [], page: 1, loadMore: false });
-  // };
-  handleSubmit = e => {
-    e.preventDefault();
-    const searchValue = e.currentTarget.elements.search.value.trim();
-    if (searchValue === '') {
-      return Notiflix.Notify.failure('Please, fill in the field!');
-    }
-    this.setState({ query: searchValue, page: 1, images: [] });
+  handleSubmit = ({ query }) => {
+    this.setState({ query, images: [], page: 1, loadMore: false });
   };
 
+  // handleSubmit = e => {
+  //   e.preventDefault();
+  //   const searchValue = e.currentTarget.elements.search.value.trim();
+  //   if (searchValue === '') {
+  //     return Notiflix.Notify.failure('Please, fill in the field!');
+  //   }
+  //   this.setState({ query: searchValue, page: 1, images: [] });
+  // };
   render() {
     const { images, isLoading, loadMore } = this.state;
     return (
@@ -92,7 +92,7 @@ export class App extends Component {
       >
         <Searchbar onSubmit={this.handleSubmit} />
         {images.length > 0 && <ImageGallery images={images} />}
-        {images.length !== 0 && loadMore && (
+        {images.length !== 0 && loadMore && !isLoading && (
           <Button handleLoad={this.loadMoreImages} />
         )}
         {isLoading && <Loader />}
